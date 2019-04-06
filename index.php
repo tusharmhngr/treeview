@@ -3,49 +3,16 @@
   <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>    
   </head>
-  <?php
-      // if(isset($_POST['nodeid'])) 
-      // {
-      //     echo $_POST['nodeid'];
-      //     $parent_id=$_POST['nodeid'];
-      //     echo 'insert new node ';
-
-      //     $sql = "INSERT INTO items (name, title, parent)
-      //     VALUES ('node', 'node', parent_id)";
-
-      //     if ($conn->query($sql) === TRUE) {
-      //         echo "New record created successfully";
-      //     } else {
-      //         echo "Error: " . $sql . "<br>" . $conn->error;
-      //     }
-      //     exit;
-      // }
-  ?> 
+  
 <?php 
-
+//create database : thoughti
+//import items.sql file i it 
 $mysqli = mysqli_connect('localhost', 'root', 'root', 'thoughti'); 
 if (mysqli_connect_errno()) { 
   printf("Connect failed: %s\n", mysqli_connect_error()); exit(); 
 } 
 
-  //----insert node-----
-/*    if(isset($_POST['nodeid'])) 
-      {
-          //echo $_POST['nodeid'];
-          $parent_id=$_POST['nodeid'];
-          //echo 'insert new node ';
 
-          $insert_sql = "INSERT INTO items (name, title, parent)
-          VALUES ('node', 'node', '".$parent_id."')";
-
-          if (mysqli_query($mysqli, $insert_sql)) {
-              echo "New record created successfully";
-          } else {
-              echo "Error: " . $insert_sql . "<br>" . mysqli_error($mysqli);
-          }
-          //exit;
-      }*/
- //--------------------------
 $res = mysqli_query($mysqli, "SELECT itm.*, (SELECT COUNT(*) FROM `items` WHERE parent = itm.id) as hasChild FROM `items` as itm"); 
 $items = array(); 
 
@@ -113,9 +80,9 @@ function generateTreeView($items, $currentParent, $currLevel = 0, $prevLevel = -
 <script>
 $(document).ready(function(){
   
-  $('.plus').click(function(){alert('ajax');
+  $('.plus').click(function(){//alert('ajax');
     var nodeid=$(this).attr('node-id');
-    alert(nodeid);
+    //alert(nodeid);
       $.ajax({ 
          url: "/thoughti/response.php",
          method:"POST",
@@ -128,9 +95,9 @@ $(document).ready(function(){
       });
   });
 
-  $('.delete').click(function(){alert('ajax delete');
+  $('.delete').click(function(){//alert('ajax delete');
     var delete_nodeid=$(this).attr('node-id');
-    alert(delete_nodeid);
+   // alert(delete_nodeid);
       $.ajax({ 
          url: "/thoughti/response.php",
          method:"POST",
@@ -138,7 +105,7 @@ $(document).ready(function(){
          dataType: "text",       
          success: function(data)  
          {
-           // window.location.reload();    
+            window.location.reload();    
          }   
       });
   });
